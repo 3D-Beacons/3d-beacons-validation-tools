@@ -1,0 +1,31 @@
+const chai = require('chai');
+const expect = chai.expect;
+const axios = require('axios').default;
+const chaiResponseValidator = require('chai-openapi-response-validator');
+
+// Load your OpenAPI from URL
+before(async function() {
+    const response = await axios.get('https://beta.swissmodel.expasy.org/docs/3dbeacons_openapi.js');
+    const openApiSpec = response.data; 
+    chai.use(chaiResponseValidator(openApiSpec));
+});
+
+// Or from file. Requires absolute path
+//chai.use(chaiResponseValidator('/my/path/to/3dbeacons_openapi.js.json'));
+describe('GET P69905.json', function() {
+  it('should satisfy OpenAPI spec', async function() {
+    const result = await axios.get('https://beta.swissmodel.expasy.org/3d-beacons/uniprot/summary/p69905.json?provider=swissmodel');
+    expect(result.status).to.equal(200);
+    expect(result.data.structures.length).to.be.above(0);
+    expect(result).to.satisfyApiSpec;
+  });
+});
+
+describe('GET summary P69905.json', function() {
+  it('should satisfy OpenAPI spec', async function() {
+    const result = await axios.get('https://beta.swissmodel.expasy.org/3d-beacons/uniprot/summary/p69905.json?provider=swissmodel');
+    expect(result.status).to.equal(200);
+    expect(result.data.structures.length).to.be.above(0)
+    expect(result).to.satisfyApiSpec;
+  });
+});

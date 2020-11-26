@@ -1,2 +1,11 @@
 # 3d-beacons-validation-tools
-Tools to help API validation 
+To run the endpoint validator, import the following modules :
+
+npm install
+npm install axios
+npm install mocha
+npm install chai
+npm install --save-dev chai-openapi-response-validator
+
+Then run using :
+npm test
